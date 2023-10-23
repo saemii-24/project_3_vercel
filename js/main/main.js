@@ -1,5 +1,3 @@
-/*Cover Bg 사이즈 구하기*/
-/*background-size:cover로 되어있을 때의 이미지 사이즈를 구한다.*/
 function coverBgSize(el) {
   //html 요소 사이즈를 가져온다.
   // console.log(el);

@@ -1,4 +1,3 @@
-//현재 창 사이즈를 받아 애니메이션을 수정한다.
 let windowSize = window.innerWidth;
 
 window.addEventListener("resize", function () {
