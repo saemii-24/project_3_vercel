@@ -5,6 +5,9 @@
 서머타임 시행시 UTC+11, 브리즈번은 서머타임 미시행이며,
 시행시 서머타임 아이콘을 보여준다.*/
 
+//환경변수 사용
+// require("dotenv").config();
+
 const sydneyTimeZone = "Australia/Sydney";
 const melbourneTimeZone = "Australia/Melbourne";
 const brisbaneTimeZone = "Australia/Brisbane";
