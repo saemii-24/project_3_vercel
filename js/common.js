@@ -511,7 +511,7 @@ function putAustraliaTime(cityTimeZone) {
   function timeUpDate() {
     //도시 시간대(기본정보) 불러오기
     let cityTime = luxon.DateTime.now().setZone(cityTimeZone);
-    console.log(cityTime);
+    // console.log(cityTime);
     let cityTimeNow = cityTime.toFormat("HH:mm:ss");
     let putTime = document.getElementById("time__now--australia");
     putTime.innerText = cityTimeNow;
