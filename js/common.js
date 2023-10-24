@@ -511,6 +511,7 @@ function putAustraliaTime(cityTimeZone) {
   function timeUpDate() {
     //도시 시간대(기본정보) 불러오기
     let cityTime = luxon.DateTime.now().setZone(cityTimeZone);
+    console.log(cityTime);
     let cityTimeNow = cityTime.toFormat("HH:mm:ss");
     let putTime = document.getElementById("time__now--australia");
     putTime.innerText = cityTimeNow;
@@ -519,10 +520,10 @@ function putAustraliaTime(cityTimeZone) {
     let cityHour = cityTime.toFormat("HH");
     // console.log(cityHour);
     let putCityHour = document.getElementById("time__merdiem--australia");
-    if (cityHour >= 12 && cityHour <= 24) {
-      putCityHour.innerHTML = "오후";
+    if (cityHour >= 0 && cityHour < 12) {
+      putCityHour.innerText = "오전";
     } else {
-      putCityHour.innerHTML = "오전";
+      putCityHour.innerText = "오후";
     }
 
     //날짜 확인
@@ -565,9 +566,9 @@ function putAustraliaTime(cityTimeZone) {
     const putIsCityDST = document.getElementById("weather__summertime--dtc");
 
     if (isCityDST) {
-      putIsCityDST.innerHTML = "sunny";
+      putIsCityDST.innerText = "sunny";
     } else {
-      putIsCityDST.innerHTML = "";
+      putIsCityDST.innerText = "";
     }
     setTimeout(timeUpDate, 200);
   }
@@ -575,16 +576,16 @@ function putAustraliaTime(cityTimeZone) {
 }
 
 /*날씨정보 알아오기*/
-const api = process.env.API_KEY;
 
 //날씨별 아이콘 이름
-function weather(city, api) {
-  fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api}&units=metric&lang=kr`
-  )
+async function weather(city) {
+  await fetch(`/api/serverless?city=${city}`, {
+    method: "POST",
+    body: JSON.stringify({ city: city }),
+  })
     .then((res) => res.json())
     .then((data) => {
-      // console.log(data);
+      console.log(data);
       //나라 판별
       let country = data["sys"]["country"];
       switch (country) {
@@ -688,29 +689,33 @@ const btnAll = document.querySelectorAll(".btn__blur--weather");
 
 //기본 한 번 호출
 let firstCall = putAustraliaTime(sydneyTimeZone);
-weather("seoul", api);
-weather("sydney", api);
+weather("seoul");
+weather("sydney");
 
 //버튼 호출
+const putAusTime = document.getElementById("time__now--australia");
 sydneyBtn.addEventListener("click", (event) => {
+  putAusTime.innerText = "";
   putAustraliaTime(sydneyTimeZone);
-  weather("Sydney, AU", api);
+  weather("Sydney, AU");
   btnAll.forEach((btn) => {
     btn.classList.remove("active");
   });
   event.target.classList.add("active");
 });
 melbourneBtn.addEventListener("click", (event) => {
+  putAusTime.innerText = "";
   putAustraliaTime(melbourneTimeZone);
-  weather("Melbourne, AU", api);
+  weather("Melbourne, AU");
   btnAll.forEach((btn) => {
     btn.classList.remove("active");
   });
   event.target.classList.add("active");
 });
 brisbaneBtn.addEventListener("click", (event) => {
+  putAusTime.innerText = "";
   putAustraliaTime(brisbaneTimeZone);
-  weather("Brisbane, AU", api);
+  weather("Brisbane, AU");
   btnAll.forEach((btn) => {
     btn.classList.remove("active");
   });
@@ -765,10 +770,10 @@ function koreaTime() {
 
   //오전 오후 확인
   let putHour = document.getElementById("time__merdiem--korea");
-  if (hour >= 12 && hour < 24) {
-    putHour.innerHTML = "오후";
+  if (putHour >= 0 && putHour < 12) {
+    putHour.innerText = "오전";
   } else {
-    putHour.innerHTML = "오전";
+    putHour.innerText = "오후";
   }
 
   setTimeout(koreaTime, 200);

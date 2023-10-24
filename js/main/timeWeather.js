@@ -5,6 +5,7 @@ const brisbaneTimeZone = "Australia/Brisbane";
 function putAustraliaTime(cityTimeZone) {
   function timeUpDate() {
     //도시 시간대(기본정보) 불러오기
+    console.log(luxon.DateTime.now());
     let cityTime = luxon.DateTime.now().setZone(cityTimeZone);
     let cityTimeNow = cityTime.toFormat("HH:mm:ss");
     let putTime = document.getElementById("time__now--australia");
@@ -14,10 +15,10 @@ function putAustraliaTime(cityTimeZone) {
     let cityHour = cityTime.toFormat("HH");
     // console.log(cityHour);
     let putCityHour = document.getElementById("time__merdiem--australia");
-    if (cityHour >= 12 && cityHour <= 24) {
-      putCityHour.innerHTML = "오후";
-    } else {
+    if (cityHour >= 0 && 12 < cityHour) {
       putCityHour.innerHTML = "오전";
+    } else {
+      putCityHour.innerHTML = "오후";
     }
 
     //날짜 확인
